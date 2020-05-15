@@ -4,10 +4,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
-import java.util.Map;
 
 @Document(collection = "games")
-public class GameEntity {
+public class GameEntity extends BaseEntity{
 
     @Field("title")
     private String title;
@@ -29,17 +28,6 @@ public class GameEntity {
 
     @Field("comments")
     private List<CommentEntity> comments;
-
-    @Field("links")
-    private Map<String, Object> links;
-
-    public Map<String, Object> getLinks() {
-        return links;
-    }
-
-    public void setLinks(Map<String, Object> links) {
-        this.links = links;
-    }
 
     public String getTitle() {
         return title;
