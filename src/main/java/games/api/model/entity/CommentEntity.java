@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
 
-public class CommentEntity extends BaseEntity{
+public class CommentEntity {
 
     @Field("user")
     private String user;
