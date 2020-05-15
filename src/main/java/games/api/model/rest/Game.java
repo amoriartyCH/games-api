@@ -29,4 +29,59 @@ public class Game extends BaseRest {
     @JsonProperty("comments")
     private List<Comment> comments;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public List<String> getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(List<String> platforms) {
+        this.platforms = platforms;
+    }
+
+    public Integer getAgeRating() {
+        return ageRating;
+    }
+
+    public void setAgeRating(Integer ageRating) {
+        this.ageRating = ageRating;
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

@@ -3,7 +3,6 @@ package games.api.model.entity;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 public class CommentEntity extends BaseEntity{
 
@@ -18,17 +17,6 @@ public class CommentEntity extends BaseEntity{
 
     @Field("likes")
     private Integer likes;
-
-    @Field("links")
-    private Map<String, Object> links;
-
-    public Map<String, Object> getLinks() {
-        return links;
-    }
-
-    public void setLinks(Map<String, Object> links) {
-        this.links = links;
-    }
 
     public String getUser() {
         return user;
