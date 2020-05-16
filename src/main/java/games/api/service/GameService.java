@@ -4,16 +4,15 @@ import com.mongodb.DuplicateKeyException;
 import com.mongodb.MongoException;
 import games.api.exception.DataException;
 import games.api.model.entity.GameEntity;
+import games.api.model.rest.Comment;
 import games.api.model.rest.Game;
+import games.api.model.rest.Report;
 import games.api.repository.GameRepository;
 import games.api.transformer.GameTransformer;
 import games.api.utility.impl.KeyIdGenerator;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GameService {
@@ -106,13 +105,42 @@ public class GameService {
         return keyIdGenerator.generate(gameTitle);
     }
 
-    //Part 2 - Game with most likes.
-    public Game getGameWithMostLikes() throws DataException {
+    //Part 2 - Report (Game with most likes and user with most comments).
+    public Report getReport() throws DataException {
+
+        Report report = new Report();
 
         List<Game> allGames = getAll();
 
-        return Collections.max(
+        report.setHighestLikedGame(Collections.max(
                 allGames,
-                Comparator.comparingInt(Game::getLikes));
+                Comparator.comparingInt(Game::getLikes)).getTitle());
+
+        HashMap<String, Integer> usersWithComments = new HashMap<>();
+
+        for (Game g : allGames) {
+            for (Comment c : g.getComments()) {
+                Integer count = usersWithComments.get(c.getUser());
+
+                if (count == null) {
+                    usersWithComments.put(c.getUser(), 1);
+                }
+                // else increment the found value by 1
+                else {
+                    usersWithComments.put(c.getUser(), count + 1);
+                }
+            }
+        }
+
+        Map.Entry<String, Integer> maxEntry =
+                Collections.max(usersWithComments.entrySet(), new Comparator<Map.Entry<String, Integer>>() {
+                    public int compare(Map.Entry<String, Integer> e1, Map.Entry<String, Integer> e2) {
+                        return e1.getValue().compareTo(e2.getValue());
+            }
+        });
+
+        report.setUserWithMostComments(maxEntry.getKey());
+
+        return report;
     }
 }
