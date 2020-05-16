@@ -36,12 +36,12 @@ This application accepts "Games" in the form of Json as seen below:
 
 # The following endpoints exist:
 
-/games - returns all games in the database
+(GET) /games - returns all games in the database
 
-/games/add - allows you to submit a game in the form of JSON (as seen above)
+(POST) /games - allows you to submit a game in the form of JSON (as seen above)
 
-/games/{gameTitle} - allows you to view an individual game by providing its title (e.g. Uncharted 4 in POSTMAN or        Uncharted%204 in chrome)
+(GET) /games/{gameTitle} - allows you to view an individual game by providing its title (e.g. Uncharted 4 in POSTMAN or        Uncharted%204 in chrome)
 
-/games/delete/{gameTitle} - allows you to delete a game by providing the game title of the game you wish to delete
+(DELETE) /games/{gameTitle} - allows you to delete a game by providing the game title of the game you wish to delete
 
-/games/report - allows you to view the highest liked game and user with most comments
+(GET) /games/report - allows you to view the highest liked game and user with most comments
