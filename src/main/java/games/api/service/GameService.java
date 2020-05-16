@@ -46,25 +46,6 @@ public class GameService {
         return info.toString();
     }
 
-    public String update(Game rest) throws DataException {
-
-        StringBuilder info = new StringBuilder();
-
-        GameEntity entity = transformer.transform(rest);
-        entity.setId(generateId(rest.getTitle()));
-
-        try {
-            repository.save(entity);
-        } catch (MongoException e) {
-            info.append("failed to update resource");
-            throw new DataException(e);
-        }
-
-        info.append("success, resource updated");
-
-        return info.toString();
-    }
-
     public Game get(String gameTitle) throws DataException {
 
         Game game;

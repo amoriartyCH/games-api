@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,7 +22,7 @@ public class GameController {
     @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
 
-        List<Game> allGames = new ArrayList<>();
+        List<Game> allGames;
 
         try {
             allGames = gameService.getAll();
@@ -38,7 +37,7 @@ public class GameController {
     @GetMapping("/{GameTitle}")
     public ResponseEntity<Game> getSingleGame(@PathVariable("GameTitle") String gameTitle) {
 
-        Game Game = new Game();
+        Game Game;
 
         try {
             Game = gameService.get(gameTitle);
@@ -56,18 +55,6 @@ public class GameController {
             gameService.create(Game);
 
             return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (DataException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @PutMapping("/update")
-    public ResponseEntity update(@Valid @RequestBody Game Game) {
-
-        try {
-            gameService.update(Game);
-
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (DataException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
