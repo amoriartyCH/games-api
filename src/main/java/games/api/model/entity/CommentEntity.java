@@ -2,8 +2,6 @@ package games.api.model.entity;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.time.LocalDate;
-
 public class CommentEntity {
 
     @Field("user")
@@ -13,7 +11,7 @@ public class CommentEntity {
     private String message;
 
     @Field("dateCreated")
-    private LocalDate dateCreated;
+    private Long dateCreated;
 
     @Field("likes")
     private Integer likes;
@@ -34,11 +32,11 @@ public class CommentEntity {
         this.message = message;
     }
 
-    public LocalDate getDateCreated() {
+    public Long getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDate dateCreated) {
+    public void setDateCreated(Long dateCreated) {
         this.dateCreated = dateCreated;
     }
 
