@@ -11,6 +11,8 @@ import games.api.utility.impl.KeyIdGenerator;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -104,5 +106,13 @@ public class GameService {
         return keyIdGenerator.generate(gameTitle);
     }
 
+    //Part 2 - Game with most likes.
+    public Game getGameWithMostLikes() throws DataException {
 
+        List<Game> allGames = getAll();
+
+        return Collections.max(
+                allGames,
+                Comparator.comparingInt(Game::getLikes));
+    }
 }
