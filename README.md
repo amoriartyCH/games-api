@@ -1,6 +1,10 @@
 # games-api
 A technical test for interview
 
+# Pre-requisites
+Java version version 1.8
+MongoDB running (See below for setting up)
+
 # To Run this project
 Simply clone the repository and run the application in Intellij.
 
@@ -41,6 +45,3 @@ This application accepts "Games" in the form of Json as seen below:
 /games/delete/{gameTitle} - allows you to delete a game by providing the game title of the game you wish to delete
 
 /games/report - allows you to view the highest liked game and user with most comments
-
-
-# If you require anything else please contact me.
