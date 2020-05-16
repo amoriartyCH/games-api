@@ -36,8 +36,8 @@ public class GameControllerTest {
     @DisplayName("Get all games - Success Path")
     void getAllGamesSuccess() throws DataException {
 
-        List<Game> movies = new ArrayList<>();
-        when(gameService.getAll()).thenReturn(movies);
+        List<Game> games = new ArrayList<>();
+        when(gameService.getAll()).thenReturn(games);
 
         ResponseEntity<List<Game>> response = controller.getAllGames();
 
@@ -124,7 +124,7 @@ public class GameControllerTest {
 
     @Test
     @DisplayName("Delete a game - Throws Exception Path")
-    void deleteAMovieThrowsException() throws DataException {
+    void deleteAGameThrowsException() throws DataException {
 
         doThrow(new DataException("")).when(gameService).delete(GAME_TITLE);
 

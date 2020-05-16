@@ -48,6 +48,20 @@ public class GameController {
         return ResponseEntity.ok().body(Game);
     }
 
+    //PART 2 - Game with highest likes.
+    @GetMapping("/report")
+    public ResponseEntity<Game> getHighestRatedGame() {
+        Game highestRatedGame;
+
+        try {
+            highestRatedGame = gameService.getGameWithMostLikes();
+        } catch (DataException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        return ResponseEntity.ok().body(highestRatedGame);
+    }
+
     @PostMapping("/add")
     public ResponseEntity create(@Valid @RequestBody Game Game) {
 

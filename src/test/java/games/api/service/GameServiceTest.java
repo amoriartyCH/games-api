@@ -110,7 +110,7 @@ public class GameServiceTest {
     }
 
     @Test
-    @DisplayName("Delete game - No Movie Found Path")
+    @DisplayName("Delete game - No Game Found Path")
     void deleteGameNoGameFound() throws DataException {
 
         when(generator.generate(GAME_TITLE)).thenReturn(GENERATED_ID);
@@ -137,14 +137,14 @@ public class GameServiceTest {
 
     @Test
     @DisplayName("Get game - Success Path")
-    void getMovieSuccess() throws DataException {
+    void getGameSuccess() throws DataException {
 
         Game game = createGameRest();
-        GameEntity movieEntity = createGameEntity();
+        GameEntity gameEntity = createGameEntity();
 
-        when(transformer.transform(movieEntity)).thenReturn(game);
+        when(transformer.transform(gameEntity)).thenReturn(game);
         when(generator.generate(GAME_TITLE)).thenReturn(GENERATED_ID);
-        when(repository.findById(GENERATED_ID)).thenReturn(ofNullable(movieEntity));
+        when(repository.findById(GENERATED_ID)).thenReturn(ofNullable(gameEntity));
 
         Game responseGame = service.get(GAME_TITLE);
 
@@ -195,7 +195,7 @@ public class GameServiceTest {
 
     @Test
     @DisplayName("Get all games - Throws Exception Path")
-    void findAllMoviesThrowsException() throws DataException {
+    void findAllGamesThrowsException() throws DataException {
 
         doThrow(new MongoException("")).when(repository).findAll();
 
