@@ -5,7 +5,11 @@ import games.api.model.rest.Comment;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 
 @Component
 public class CommentTransformer {
