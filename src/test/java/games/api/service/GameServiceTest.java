@@ -23,10 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Optional.ofNullable;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -70,9 +73,9 @@ public class GameServiceTest {
         when(transformer.transform(game)).thenReturn(gameEntity);
         when(generator.generate(GAME_TITLE)).thenReturn(GENERATED_ID);
 
-        String response = service.create(game);
+        Game response = service.create(game);
 
-        assertEquals(response, "success, resource created");
+        assertEquals(response, game);
         assertRepositoryInsertCalled(gameEntity);
 
     }

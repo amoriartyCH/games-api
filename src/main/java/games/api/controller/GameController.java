@@ -8,7 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,51 +29,45 @@ public class GameController {
     @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
 
-        List<Game> allGames;
-
         try {
-            allGames = gameService.getAll();
+            return ResponseEntity.ok().body(gameService.getAll());
 
         } catch (DataException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
-        return ResponseEntity.ok().body(allGames);
     }
 
     @GetMapping("/{GameTitle}")
     public ResponseEntity<Game> getSingleGame(@PathVariable("GameTitle") String gameTitle) {
 
-        Game Game;
-
         try {
-            Game = gameService.get(gameTitle);
+            return ResponseEntity.ok().body(gameService.get(gameTitle));
         } catch (DataException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
-        return ResponseEntity.ok().body(Game);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity create(@Valid @RequestBody Game Game) {
 
         try {
-            gameService.create(Game);
-
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            return ResponseEntity.status(HttpStatus.CREATED).body(gameService.create(Game));
         } catch (DataException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    @DeleteMapping("/delete/{GameTitle}")
+    @DeleteMapping("/{GameTitle}")
     public ResponseEntity delete(@PathVariable("GameTitle") String gameTitle) {
 
         try {
-            gameService.delete(gameTitle);
+            String status = gameService.delete(gameTitle);
 
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            if(status.equals("Game not found") || status.equals("failed")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
         } catch (DataException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -76,14 +76,11 @@ public class GameController {
     //PART 2 - Game with highest likes and user with most comments.
     @GetMapping("/report")
     public ResponseEntity<Report> getReport() {
-        Report report;
 
         try {
-            report = gameService.getReport();
+            return ResponseEntity.ok().body(gameService.getReport());
         } catch (DataException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
-        return ResponseEntity.ok().body(report);
     }
 }

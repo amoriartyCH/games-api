@@ -38,6 +38,10 @@ public class GameTransformer {
 
     public Game transform(GameEntity entity) {
 
+        if(entity == null) {
+            return null;
+        }
+
         Game rest = new Game();
 
         BeanUtils.copyProperties(entity, rest);

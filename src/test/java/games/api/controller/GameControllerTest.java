@@ -16,7 +16,10 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
@@ -89,7 +92,7 @@ public class GameControllerTest {
     void createAGameSuccess() throws DataException {
 
         Game game = new Game();
-        when(gameService.create(game)).thenReturn("success");
+        when(gameService.create(game)).thenReturn(game);
 
         ResponseEntity<Game> response = controller.create(game);
 
@@ -107,7 +110,7 @@ public class GameControllerTest {
         ResponseEntity<Game> response = controller.create(game);
 
         assertNotNull(response);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNull(response.getBody());
     }
 

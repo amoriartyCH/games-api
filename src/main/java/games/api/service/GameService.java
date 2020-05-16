@@ -10,9 +10,16 @@ import games.api.model.rest.Report;
 import games.api.repository.GameRepository;
 import games.api.transformer.GameTransformer;
 import games.api.utility.impl.KeyIdGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @Service
 public class GameService {
@@ -21,6 +28,7 @@ public class GameService {
     GameTransformer transformer;
     KeyIdGenerator keyIdGenerator;
 
+    @Autowired
     public GameService(GameRepository repository, GameTransformer transformer, KeyIdGenerator keyIdGenerator) {
 
         this.repository = repository;
@@ -28,9 +36,7 @@ public class GameService {
         this.keyIdGenerator = keyIdGenerator;
     }
 
-    public String create(Game rest) throws DataException {
-
-        StringBuilder info = new StringBuilder();
+    public Game create(Game rest) throws DataException {
 
         GameEntity entity = transformer.transform(rest);
         entity.setId(generateId(rest.getTitle()));
@@ -38,28 +44,22 @@ public class GameService {
         try {
             repository.insert(entity);
         } catch (DuplicateKeyException e) {
-            info.append("failed, ID already exists");
             throw new DataException(e);
         }
 
-        info.append("success, resource created");
-
-        return info.toString();
+        return rest;
     }
 
     public Game get(String gameTitle) throws DataException {
 
-        Game game;
         GameEntity entity;
 
         try {
             entity = repository.findById(generateId(gameTitle)).orElse(null);
-            game = transformer.transform(entity);
+            return transformer.transform(entity);
         } catch (MongoException e) {
             throw new DataException(e);
         }
-
-        return game;
     }
 
     public List<Game> getAll() throws DataException {
@@ -92,6 +92,7 @@ public class GameService {
                 info.append("successfully deleted game");
             } else {
                 info.append("Game not found");
+                return info.toString();
             }
         } catch (MongoException e) {
             info.append("failed");
@@ -112,10 +113,19 @@ public class GameService {
 
         List<Game> allGames = getAll();
 
-        report.setHighestLikedGame(Collections.max(
-                allGames,
-                Comparator.comparingInt(Game::getLikes)).getTitle());
+        report.setHighestLikedGame(getHighestLikedGame(allGames));
 
+        report.setUserWithMostComments(getUserWithMostComments(allGames));
+
+        return report;
+    }
+
+    private String getHighestLikedGame(List<Game> allGames) {
+
+        return Collections.max(allGames, Comparator.comparingInt(Game::getLikes)).getTitle();
+    }
+
+    private String getUserWithMostComments(List<Game> allGames) {
         HashMap<String, Integer> usersWithComments = new HashMap<>();
 
         for (Game g : allGames) {
@@ -135,11 +145,9 @@ public class GameService {
                 Collections.max(usersWithComments.entrySet(), new Comparator<Map.Entry<String, Integer>>() {
                     public int compare(Map.Entry<String, Integer> e1, Map.Entry<String, Integer> e2) {
                         return e1.getValue().compareTo(e2.getValue());
-            }
-        });
+                    }
+                });
 
-        report.setUserWithMostComments(maxEntry.getKey());
-
-        return report;
+        return maxEntry.getKey();
     }
 }
