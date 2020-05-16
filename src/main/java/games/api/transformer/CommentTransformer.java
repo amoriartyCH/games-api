@@ -27,7 +27,9 @@ public class CommentTransformer {
 
         BeanUtils.copyProperties(entity, rest);
 
-        rest.setDateCreated(LocalDateTime.ofInstant(Instant.ofEpochMilli(entity.getDateCreated()), ZoneId.systemDefault()).toLocalDate());
+        LocalDate dateCreate =
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(entity.getDateCreated()), ZoneId.systemDefault()).toLocalDate();
+        rest.setDateCreated(dateCreate);
 
         return rest;
     }
