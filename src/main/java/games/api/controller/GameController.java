@@ -2,6 +2,7 @@ package games.api.controller;
 
 import games.api.exception.DataException;
 import games.api.model.rest.Game;
+import games.api.model.rest.Report;
 import games.api.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,20 +49,6 @@ public class GameController {
         return ResponseEntity.ok().body(Game);
     }
 
-    //PART 2 - Game with highest likes.
-    @GetMapping("/report")
-    public ResponseEntity<Game> getHighestRatedGame() {
-        Game highestRatedGame;
-
-        try {
-            highestRatedGame = gameService.getGameWithMostLikes();
-        } catch (DataException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
-        return ResponseEntity.ok().body(highestRatedGame);
-    }
-
     @PostMapping("/add")
     public ResponseEntity create(@Valid @RequestBody Game Game) {
 
@@ -84,5 +71,19 @@ public class GameController {
         } catch (DataException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    //PART 2 - Game with highest likes and user with most comments.
+    @GetMapping("/report")
+    public ResponseEntity<Report> getReport() {
+        Report report;
+
+        try {
+            report = gameService.getReport();
+        } catch (DataException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        return ResponseEntity.ok().body(report);
     }
 }
