@@ -23,7 +23,7 @@ public class GameTransformer {
 
         BeanUtils.copyProperties(rest, entity);
 
-        if(!rest.getComments().isEmpty()) {
+        if(rest.getComments() != null) {
             List<CommentEntity> commentEntityList = new ArrayList<>();
 
             for (Comment c: rest.getComments()) {
@@ -42,7 +42,7 @@ public class GameTransformer {
 
         BeanUtils.copyProperties(entity, rest);
 
-        if(!entity.getComments().isEmpty()) {
+        if(entity.getComments() != null) {
             List<Comment> commentList = new ArrayList<>();
 
             for (CommentEntity ce: entity.getComments()) {
