@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
 
-public class Comment extends BaseRest{
+public class Comment {
 
     @JsonProperty("user")
     private String user;
