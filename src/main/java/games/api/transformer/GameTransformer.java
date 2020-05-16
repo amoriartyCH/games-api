@@ -23,7 +23,6 @@ public class GameTransformer {
 
         BeanUtils.copyProperties(rest, entity);
 
-        //Transform comments using a dedicated transformer as epoch conversion is needed
         if(!rest.getComments().isEmpty()) {
             List<CommentEntity> commentEntityList = new ArrayList<>();
 
@@ -43,7 +42,6 @@ public class GameTransformer {
 
         BeanUtils.copyProperties(entity, rest);
 
-        //Transform comments using a dedicated transformer as epoch conversion is needed
         if(!entity.getComments().isEmpty()) {
             List<Comment> commentList = new ArrayList<>();
 

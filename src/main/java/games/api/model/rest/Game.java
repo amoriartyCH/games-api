@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
-public class Game extends BaseRest {
+public class Game {
 
     @JsonProperty("title")
     @Length(min = 1, max = 30, message = "Outside of letter range constraints (min 1, max 30)")

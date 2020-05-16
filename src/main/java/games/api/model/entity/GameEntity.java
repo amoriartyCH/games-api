@@ -1,12 +1,17 @@
 package games.api.model.entity;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
 @Document(collection = "games")
-public class GameEntity extends BaseEntity{
+public class GameEntity {
+
+    @Id
+    @Field("_id")
+    private String id;
 
     @Field("title")
     private String title;
@@ -28,6 +33,14 @@ public class GameEntity extends BaseEntity{
 
     @Field("comments")
     private List<CommentEntity> comments;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
