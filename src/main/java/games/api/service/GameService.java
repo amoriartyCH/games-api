@@ -125,7 +125,6 @@ public class GameService {
                 if (count == null) {
                     usersWithComments.put(c.getUser(), 1);
                 }
-                // else increment the found value by 1
                 else {
                     usersWithComments.put(c.getUser(), count + 1);
                 }
