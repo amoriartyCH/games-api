@@ -3,7 +3,7 @@ package games.api.controller;
 import games.api.exception.DataException;
 import games.api.model.rest.Game;
 import games.api.model.rest.Report;
-import games.api.service.GameService;
+import games.api.service.GameServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,13 +24,13 @@ import java.util.List;
 public class GameController {
 
     @Autowired
-    private GameService gameService;
+    private GameServiceImpl gameServiceImpl;
 
     @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
 
         try {
-            return ResponseEntity.ok().body(gameService.getAll());
+            return ResponseEntity.ok().body(gameServiceImpl.getAll());
 
         } catch (DataException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -41,7 +41,7 @@ public class GameController {
     public ResponseEntity<Game> getSingleGame(@PathVariable("GameTitle") String gameTitle) {
 
         try {
-            return ResponseEntity.ok().body(gameService.get(gameTitle));
+            return ResponseEntity.ok().body(gameServiceImpl.get(gameTitle));
         } catch (DataException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -51,7 +51,7 @@ public class GameController {
     public ResponseEntity create(@Valid @RequestBody Game Game) {
 
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(gameService.create(Game));
+            return ResponseEntity.status(HttpStatus.CREATED).body(gameServiceImpl.create(Game));
         } catch (DataException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -61,7 +61,7 @@ public class GameController {
     public ResponseEntity delete(@PathVariable("GameTitle") String gameTitle) {
 
         try {
-            String status = gameService.delete(gameTitle);
+            String status = gameServiceImpl.delete(gameTitle);
 
             if(status.equals("Game not found") || status.equals("failed")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -78,7 +78,7 @@ public class GameController {
     public ResponseEntity<Report> getReport() {
 
         try {
-            return ResponseEntity.ok().body(gameService.getReport());
+            return ResponseEntity.ok().body(gameServiceImpl.getReport());
         } catch (DataException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
