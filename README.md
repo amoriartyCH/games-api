@@ -5,12 +5,12 @@ A technical test for interview
 Java version version 1.8
 MongoDB running (See below for setting up)
 
-# To Run this project
-Simply clone the repository and run the application in Intellij.
-
 # Setting up MongoDB
 To add data to the mongoDB you will need to get mongoDB running using command "mongod" in your terminal window.
 Then you can run the application and it will connect to mongoDB and do the rest for you.
+
+# To Run this project
+Once mongoDB is running, simply clone the repository and run the application in Intellij.
 
 This application accepts "Games" in the form of Json as seen below:
 # JSON Game Example
