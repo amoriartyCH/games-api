@@ -7,6 +7,7 @@ import games.api.model.entity.CommentEntity;
 import games.api.model.entity.GameEntity;
 import games.api.model.rest.Comment;
 import games.api.model.rest.Game;
+import games.api.model.rest.Report;
 import games.api.repository.GameRepository;
 import games.api.transformer.GameTransformer;
 import games.api.utility.impl.KeyIdGenerator;
@@ -204,6 +205,24 @@ public class GameServiceTest {
 
         Throwable exception = assertThrows(DataException.class, () -> service.getAll());
         assertNotNull(exception);
+    }
+
+    @Test
+    @DisplayName("Get report - Success Path")
+    void getReportSuccess() throws DataException {
+        Report report;
+
+        List<GameEntity> gameEntities = new ArrayList<>();
+        gameEntities.add(createGameEntity());
+        Game gameRest = createGameRest();
+
+        when(repository.findAll()).thenReturn(gameEntities);
+        when(transformer.transform(gameEntities.get(0))).thenReturn(gameRest);
+
+        report = service.getReport();
+
+        assertEquals(report.getUserWithMostComments(), USER);
+        assertEquals(report.getHighestLikedGame(), GAME_TITLE);
     }
 
     private void assertRepositoryInsertCalled(GameEntity gameEntity) {
