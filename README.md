@@ -36,12 +36,12 @@ This application accepts "Games" in the form of Json as seen below:
 
 # The following endpoints exist:
 
-(GET) /games - returns all games in the database
+(POST) http://localhost:8080/games - allows you to submit a game in the form of JSON (as seen above)
 
-(POST) /games - allows you to submit a game in the form of JSON (as seen above)
+(GET) http://localhost:8080/games - returns all games in the database
 
-(GET) /games/{gameTitle} - allows you to view an individual game by providing its title (e.g. Uncharted 4 in POSTMAN or        Uncharted%204 in chrome)
+(GET) http://localhost:8080/games/{gameTitle} - allows you to view an individual game by providing its title (e.g. "Uncharted 4" in POSTMAN or "Uncharted%204" in chrome)
 
-(DELETE) /games/{gameTitle} - allows you to delete a game by providing the game title of the game you wish to delete
+(DELETE) http://localhost:8080/games/{gameTitle} - allows you to delete a game by providing the game title of the game you wish to delete
 
-(GET) /games/report - allows you to view the highest liked game and user with most comments
+(GET) http://localhost:8080/games/report - allows you to view the highest liked game and user with most comments
