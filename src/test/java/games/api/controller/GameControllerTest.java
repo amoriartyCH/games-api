@@ -2,6 +2,7 @@ package games.api.controller;
 
 import games.api.exception.DataException;
 import games.api.model.rest.Game;
+import games.api.model.rest.Report;
 import games.api.service.GameService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -132,6 +133,32 @@ public class GameControllerTest {
         doThrow(new DataException("")).when(gameService).delete(GAME_TITLE);
 
         ResponseEntity<Game> response = controller.delete(GAME_TITLE);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
+    @Test
+    @DisplayName("Get report - Success Path")
+    void getReportSuccess() throws DataException {
+
+        Report report = new Report();
+        when(gameService.getReport()).thenReturn(report);
+
+        ResponseEntity<Report> response = controller.getReport();
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Get report - Throws Exception Path")
+    void getReportThrowsException() throws DataException {
+
+        doThrow(new DataException("")).when(gameService).getReport();
+
+        ResponseEntity<Report> response = controller.getReport();
 
         assertNotNull(response);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
