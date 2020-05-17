@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GameServiceTest {
+public class GameServiceImplTest {
 
     @Mock
     private GameTransformer transformer;
@@ -46,7 +46,7 @@ public class GameServiceTest {
     private KeyIdGenerator generator;
 
     @InjectMocks
-    private GameService service;
+    private GameServiceImpl service;
 
     private static final String GAME_TITLE = "gameTitle";
     private static final Integer RATING = 16;

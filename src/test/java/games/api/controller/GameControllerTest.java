@@ -3,7 +3,7 @@ package games.api.controller;
 import games.api.exception.DataException;
 import games.api.model.rest.Game;
 import games.api.model.rest.Report;
-import games.api.service.GameService;
+import games.api.service.GameServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 public class GameControllerTest {
 
     @Mock
-    private GameService gameService;
+    private GameServiceImpl gameServiceImpl;
 
     @InjectMocks
     private GameController controller;
@@ -41,7 +41,7 @@ public class GameControllerTest {
     void getAllGamesSuccess() throws DataException {
 
         List<Game> games = new ArrayList<>();
-        when(gameService.getAll()).thenReturn(games);
+        when(gameServiceImpl.getAll()).thenReturn(games);
 
         ResponseEntity<List<Game>> response = controller.getAllGames();
 
@@ -53,7 +53,7 @@ public class GameControllerTest {
     @DisplayName("Get all games - Throws Exception Path")
     void getAllGamesThrowsException() throws DataException {
 
-        doThrow(new DataException("")).when(gameService).getAll();
+        doThrow(new DataException("")).when(gameServiceImpl).getAll();
 
         ResponseEntity<List<Game>> response = controller.getAllGames();
 
@@ -67,7 +67,7 @@ public class GameControllerTest {
     void getASingleGameSuccess() throws DataException {
 
         Game game = new Game();
-        when(gameService.get(GAME_TITLE)).thenReturn(game);
+        when(gameServiceImpl.get(GAME_TITLE)).thenReturn(game);
 
         ResponseEntity<Game> response = controller.getSingleGame(GAME_TITLE);
 
@@ -79,7 +79,7 @@ public class GameControllerTest {
     @DisplayName("Get a single game - Throws Exception Path")
     void getASingleGameThrowsException() throws DataException {
 
-        doThrow(new DataException("")).when(gameService).get(GAME_TITLE);
+        doThrow(new DataException("")).when(gameServiceImpl).get(GAME_TITLE);
 
         ResponseEntity<Game> response = controller.getSingleGame(GAME_TITLE);
 
@@ -93,7 +93,7 @@ public class GameControllerTest {
     void createAGameSuccess() throws DataException {
 
         Game game = new Game();
-        when(gameService.create(game)).thenReturn(game);
+        when(gameServiceImpl.create(game)).thenReturn(game);
 
         ResponseEntity<Game> response = controller.create(game);
 
@@ -106,7 +106,7 @@ public class GameControllerTest {
     void createAGameThrowsException() throws DataException {
 
         Game game = new Game();
-        doThrow(new DataException("")).when(gameService).create(game);
+        doThrow(new DataException("")).when(gameServiceImpl).create(game);
 
         ResponseEntity<Game> response = controller.create(game);
 
@@ -118,7 +118,7 @@ public class GameControllerTest {
     @Test
     @DisplayName("Delete a game - Success Path")
     void deleteAGameSuccess() throws DataException{
-        when(gameService.delete(GAME_TITLE)).thenReturn("success");
+        when(gameServiceImpl.delete(GAME_TITLE)).thenReturn("success");
 
         ResponseEntity<Game> response = controller.delete(GAME_TITLE);
 
@@ -130,7 +130,7 @@ public class GameControllerTest {
     @DisplayName("Delete a game - Throws Exception Path")
     void deleteAGameThrowsException() throws DataException {
 
-        doThrow(new DataException("")).when(gameService).delete(GAME_TITLE);
+        doThrow(new DataException("")).when(gameServiceImpl).delete(GAME_TITLE);
 
         ResponseEntity<Game> response = controller.delete(GAME_TITLE);
 
@@ -144,7 +144,7 @@ public class GameControllerTest {
     void getReportSuccess() throws DataException {
 
         Report report = new Report();
-        when(gameService.getReport()).thenReturn(report);
+        when(gameServiceImpl.getReport()).thenReturn(report);
 
         ResponseEntity<Report> response = controller.getReport();
 
@@ -156,7 +156,7 @@ public class GameControllerTest {
     @DisplayName("Get report - Throws Exception Path")
     void getReportThrowsException() throws DataException {
 
-        doThrow(new DataException("")).when(gameService).getReport();
+        doThrow(new DataException("")).when(gameServiceImpl).getReport();
 
         ResponseEntity<Report> response = controller.getReport();
 
