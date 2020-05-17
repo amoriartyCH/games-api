@@ -210,8 +210,7 @@ public class GameServiceTest {
     @Test
     @DisplayName("Get report - Success Path")
     void getReportSuccess() throws DataException {
-
-        Report report = new Report();
+        Report report;
 
         List<GameEntity> gameEntities = new ArrayList<>();
         gameEntities.add(createGameEntity());
