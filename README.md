@@ -34,6 +34,8 @@ This application accepts "Games" in the form of Json as seen below:
         }]
 }
 
+Included at the base directory of this repo is a text document "Sample data to fill database". This document contains 5 JSON bodies, each of which is a full game which follows the example JSON structure above.
+
 # The following endpoints exist:
 
 (POST) http://localhost:8080/games - allows you to submit a game in the form of JSON (as seen above)
