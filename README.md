@@ -10,6 +10,8 @@ To add data to the mongoDB you will need to get mongoDB running using command "m
 Then you can run the application and it will connect to mongoDB and do the rest for you.
 
 # To Run this project
+Visit the root of the project and do the following:
+
 - for the logger environment variable, execute 'export LOG_LEVEL="VAR"' where VAR is one of the following:
 	* DEBUG 
 	* ERROR 
@@ -23,7 +25,7 @@ _If no VAR is provided, INFO will be set as the default level_
 
 - run 'mvn clean install'
 
-- execute the jar using 'java -jar target/<jarname>'
+- execute the jar using 'java -jar target/api-0.0.1.jar'
 	
 # JSON Game Example
 This application accepts "Games" in the form of Json as seen below:
