@@ -4,6 +4,8 @@ import games.api.exception.DataException;
 import games.api.model.rest.Game;
 import games.api.model.rest.Report;
 import games.api.service.GameServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +26,8 @@ import java.util.List;
 @RequestMapping(value = "/games", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GameController {
 
+    private static final Logger logger = LoggerFactory.getLogger(GameController.class);
+
     @Autowired
     private GameServiceImpl gameServiceImpl;
 
@@ -32,8 +36,9 @@ public class GameController {
 
         try {
             return ResponseEntity.ok().body(gameServiceImpl.getAll());
-
         } catch (DataException e) {
+            logger.error("Encountered an error trying to retrieve all games, Data exception thrown: " +
+                    e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -45,6 +50,7 @@ public class GameController {
             Game game = gameServiceImpl.get(gameTitle);
 
             if(game == null) {
+                logger.error("Failed to retrieve game, null returned from service");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
                 return ResponseEntity.ok().body(game);
@@ -58,11 +64,14 @@ public class GameController {
     public ResponseEntity create(@Valid @RequestBody Game Game, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()) {
+            logger.error("User has tried to submit a request body with more than 30 characters for the title of the game");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title more than 30 characters");
         }
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(gameServiceImpl.create(Game));
         } catch (DataException e) {
+            logger.error("Encountered an error trying to create a game resource: " +
+                    e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -74,11 +83,15 @@ public class GameController {
             String status = gameServiceImpl.delete(gameTitle);
 
             if(status.equals("Game not found") || status.equals("failed")) {
+                logger.error("No game exists for the title the user provided: " +
+                        gameTitle);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
         } catch (DataException e) {
+            logger.error("Encountered an error trying to delete a game resource: " +
+                    e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -90,6 +103,8 @@ public class GameController {
         try {
             return ResponseEntity.ok().body(gameServiceImpl.getReport());
         } catch (DataException e) {
+            logger.error("Encountered an error trying to generate a report: " +
+                    e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
