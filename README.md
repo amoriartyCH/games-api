@@ -25,8 +25,7 @@ _If no VAR is provided, INFO will be set as the default level_
 
 - run 'mvn clean install'
 
-- execute the jar using 'java -jar target/<jarname>'
-
+- execute the jar using 'java -jar target/jar-name.jar' (where "jar-name" is the name of the built jar in the target dir)
 # JSON Game Example
 This application accepts "Games" in the form of Json as seen below:
 
