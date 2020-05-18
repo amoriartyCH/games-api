@@ -10,10 +10,23 @@ To add data to the mongoDB you will need to get mongoDB running using command "m
 Then you can run the application and it will connect to mongoDB and do the rest for you.
 
 # To Run this project
-Once mongoDB is running, simply clone the repository and run the application in Intellij.
+- for the logger environment variable, execute 'export LOG_LEVEL="VAR"' where VAR is one of the following:
+	-DEBUG 
+	-ERROR 
+	-FATAL 
+	-INFO 
+	-OFF 
+	-TRACE 
+	-WARN
+If no LOG_LEVEL variable is provided, a default level of INFO will be set automatically
 
-This application accepts "Games" in the form of Json as seen below:
+- run 'mvn clean install'
+
+- execute the jar using 'java -jar target/<jarname>'
+	
 # JSON Game Example
+This application accepts "Games" in the form of Json as seen below:
+
 {
 	"title": "Gears of War: 2",
         "description": "New game, so new, number 2",
