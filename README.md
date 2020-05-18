@@ -2,8 +2,8 @@
 A technical test for interview
 
 # Pre-requisites
-Java version version 1.8
-MongoDB running (See below for setting up)
+* Java version version 1.8
+* MongoDB running (See below for setting up)
 
 # Setting up MongoDB
 To add data to the mongoDB you will need to get mongoDB running using command "mongod" in your terminal window.
