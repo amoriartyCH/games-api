@@ -116,7 +116,7 @@ public class GameControllerTest {
         ResponseEntity<Game> response = controller.create(game, bindingResult);
 
         assertNotNull(response);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertNull(response.getBody());
     }
 
