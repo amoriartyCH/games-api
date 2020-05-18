@@ -11,14 +11,15 @@ Then you can run the application and it will connect to mongoDB and do the rest 
 
 # To Run this project
 - for the logger environment variable, execute 'export LOG_LEVEL="VAR"' where VAR is one of the following:
-	-DEBUG 
-	-ERROR 
-	-FATAL 
-	-INFO 
-	-OFF 
-	-TRACE 
-	-WARN
-If no LOG_LEVEL variable is provided, a default level of INFO will be set automatically
+	* DEBUG 
+	* ERROR 
+	* FATAL 
+	* INFO 
+	* OFF 
+	* TRACE 
+	* WARN
+
+_If no VAR is provided, INFO will be set as the default level_
 
 - run 'mvn clean install'
 
