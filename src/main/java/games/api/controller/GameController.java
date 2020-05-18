@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,19 +42,28 @@ public class GameController {
     public ResponseEntity<Game> getSingleGame(@PathVariable("GameTitle") String gameTitle) {
 
         try {
-            return ResponseEntity.ok().body(gameServiceImpl.get(gameTitle));
+            Game game = gameServiceImpl.get(gameTitle);
+
+            if(game == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.ok().body(game);
+            }
         } catch (DataException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody Game Game) {
+    public ResponseEntity create(@Valid @RequestBody Game Game, BindingResult bindingResult) {
 
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title more than 30 characters");
+        }
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(gameServiceImpl.create(Game));
         } catch (DataException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
