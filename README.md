@@ -25,8 +25,8 @@ _If no VAR is provided, INFO will be set as the default level_
 
 - run 'mvn clean install'
 
-- execute the jar using 'java -jar target/api-0.0.1.jar'
-	
+- execute the jar using 'java -jar target/<jarname>'
+
 # JSON Game Example
 This application accepts "Games" in the form of Json as seen below:
 
