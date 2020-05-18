@@ -28,7 +28,7 @@ _If no VAR is provided, INFO will be set as the default level_
 # JSON Game Example
 This application accepts "Games" in the form of Json as seen below:
 
-{
+```{
 	"title": "Gears of War: 2",
         "description": "New game, so new, number 2",
         "by": "Activision",
@@ -46,7 +46,7 @@ This application accepts "Games" in the form of Json as seen below:
             "dateCreated": "2016-04-02",
             "likes": 15
         }]
-}
+}```
 
 Included at the base directory of this repo is a text document "Sample data to fill database". This document contains 5 JSON bodies, each of which is a full game which follows the example JSON structure above.
 
