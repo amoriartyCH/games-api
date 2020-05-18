@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,9 @@ public class GameControllerTest {
 
     @Mock
     private GameServiceImpl gameServiceImpl;
+
+    @Mock
+    private BindingResult bindingResult;
 
     @InjectMocks
     private GameController controller;
@@ -93,9 +97,10 @@ public class GameControllerTest {
     void createAGameSuccess() throws DataException {
 
         Game game = new Game();
+
         when(gameServiceImpl.create(game)).thenReturn(game);
 
-        ResponseEntity<Game> response = controller.create(game);
+        ResponseEntity<Game> response = controller.create(game, bindingResult);
 
         assertNotNull(response);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -108,7 +113,7 @@ public class GameControllerTest {
         Game game = new Game();
         doThrow(new DataException("")).when(gameServiceImpl).create(game);
 
-        ResponseEntity<Game> response = controller.create(game);
+        ResponseEntity<Game> response = controller.create(game, bindingResult);
 
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());

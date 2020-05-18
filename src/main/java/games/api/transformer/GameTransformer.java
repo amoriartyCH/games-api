@@ -15,7 +15,7 @@ import java.util.List;
 public class GameTransformer {
 
     @Autowired
-    CommentTransformer commentTransformer;
+    private CommentTransformer commentTransformer;
 
     public GameEntity transform(Game rest) {
 
