@@ -64,7 +64,7 @@ public class GameController {
     public ResponseEntity create(@Valid @RequestBody Game Game, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()) {
-            logger.error("User has tried to submit a request body with more than 30 characters for the title of the game");
+            logger.info("User has tried to submit a request body with more than 30 characters for the title of the game");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title more than 30 characters");
         }
         try {
@@ -82,10 +82,9 @@ public class GameController {
         try {
             String status = gameServiceImpl.delete(gameTitle);
 
-            if(status.equals("Game not found") || status.equals("failed")) {
-                logger.error("No game exists for the title the user provided: " +
-                        gameTitle);
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            if(status.equals("Game not found")) {
+                logger.info("No game exists for the title the user provided: " + gameTitle);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }

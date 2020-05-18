@@ -12,6 +12,7 @@
 
 # Idea files
 .idea
+.DS_Store
 
 #Target build files
 target/

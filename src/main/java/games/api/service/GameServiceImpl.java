@@ -99,7 +99,6 @@ public class GameServiceImpl implements GameService {
                 return info.toString();
             }
         } catch (MongoException e) {
-            info.append("failed");
             throw new DataException(e);
         }
 
